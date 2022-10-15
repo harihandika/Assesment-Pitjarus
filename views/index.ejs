@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <title>index</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <form method="get">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <select name="cities" class="form-control" id="">
+                                <option value="" disabled selected hidden>-- Select Area --</option>
+                                <% storeAreas.map((area=> { %>
+                                    <option value="<%= area.area_name %>">
+                                        <%= area.area_name %>
+                                    </option>
+                                    <% })) %>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input name="startDate" class="form-control" type="date">
+                        </div>
+                        <div class="col-md-4">
+                            <input name="endDate" class="form-control" type="date">
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-success">View</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-body">
+                <canvas id="myChart" width="400" height="200"></canvas>
+            </div>
+            <hr>
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th>Brand</th>
+                    <th>Area</th>
+                    <th>Persent</th>
+                </tr>
+                <% datataTable.map((data)=>{ %>
+                    <tr>
+                        <td>
+                            <%= data.brand %>
+                        </td>
+                        <td>
+                            <%= data.area %>
+                        </td>
+                        <td>
+                            <%= data.persent %>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </table>
+        </div>
+    </div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+    integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    let labels = [];
+    <% charts.labelCharts.map((data) => { %>
+        labels.push(`<%= data %>`)
+        <% }) %>
+  const ctx = document.getElementById('myChart');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '# of Votes',
+                data: [<%= charts.dataCharts %>],
+                backgroundColor: [
+                    'rgba(159, 255, 128)',
+                    'rgba(0, 138, 230)',
+                    'rgba(128, 0, 85)',
+                    'rgba(26, 83, 255)',
+                    'rgba(255, 255, 26)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+</html>
