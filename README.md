@@ -17,3 +17,5 @@
 7. If you wanna create database in terminal then use "npx sequelize db:create".
 8. Choose file 'dev_test114.sql' in this folder, scroll down and click Import.
 9. All setting is done. Go back to the code, and repeat the third step of User Guide.
+
+### Noted: Calender date just from 01-01-2021 to 05-01-2021
